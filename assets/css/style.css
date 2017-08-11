@@ -1,0 +1,17 @@
+.head-logo{
+  margin-top: 20px;
+  height:100px;
+  width:300px;
+}
+
+.game-container{
+  height: 500px;
+  width: 1200px;
+  background-color: #eee;
+  border: 10px solid black;
+  border-radius: 5px;
+}
+
+#gameStart{
+  margin-top: 250px;
+}
