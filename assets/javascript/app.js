@@ -5,7 +5,7 @@ var counter = 30;
 var questionArray = ['Which family lives in Queens?', 'What kind of bread did the Costanza family steal back from Julie?','Who invaded Spain in the 8th Century?','In what famous wine country does the Maestro own a home?','What alcohol cannot be detected on your breath?','What catalog did Elaine run while her boss was away in Burma?','What professional sports team does George work for?'];
 var answerArray =[['The Costanzas', 'The Seinfelds', 'The Kramers', 'The Beneses?'],['Pumpernickel', 'Rye', 'Sourdough', 'French'],['The Turks','The Moors', 'The Jews', 'The Moops'],['Napa Valley', 'Tuscany', 'Columbia Basin', 'Sicily'],
 ['Hennigans','Jameson','Johnnie Walker','Bacardi'],['L.L. Bean', 'Brooks Brothers', 'J. Peterman', 'J. Crew'],['Rangers','Yankees','Knicks','Jets']];
-var imageArray = [];
+var imageArray = ["<img class='center-block img-right' src='assets/images/1.gif'>","<img class='center-block img-right' src='assets/images/2.gif'>","<img class='center-block img-right' src='assets/images/3.gif'>","<img class='center-block img-right' src='assets/images/4.gif'>","<img class='center-block img-right' src='assets/images/5.gif'>","<img class='center-block img-right' src='assets/images/6.gif'>","<img class='center-block img-right' src='assets/images/7.gif'>",];
 var correctAnswers = ['A. The Costanzas','B. Rye','D. The Moops', 'B. Tuscany','A. Hennigans','C. J. Peterman','B. Yankees'];
 var questionCounter = 0;
 var selectedAnswer;
@@ -23,7 +23,7 @@ function initialScreen() {
 
 function generateLossDueToTimeout(){
   unansweredTally++;
-  gameHTML = "<p class='text-center timer-p'>Time Remaining: <span class='timer'>" + counter + "</span></p>" + "<p class='text-center'>You ran out of time!  The correct answer was: " + correctAnswers[questionCounter] + "</p>" + "<img class='center-block img-wrong' src='img/x.png'>";
+  gameHTML = "<p class='text-center timer-p'>Time Remaining: <span class='timer'>" + counter + "</span></p>" + "<p class='text-center'>You ran out of time!  The correct answer was: " + correctAnswers[questionCounter] + "</p>" + imageArray[questionCounter];
   $('.mainArea').html(gameHTML);
   setTimeout(wait, 4000);
 }
@@ -32,12 +32,13 @@ function generateWin(){
   correctTally++;
   gameHTML = "<p class='text-center timer-p'>Time Remaining: <span class='timer'>" + counter + "</span></p>" + "<p class='text-center'>Correct! The answer is: " + correctAnswers[questionCounter] + "</p>" + imageArray[questionCounter];
   $('.mainArea').html(gameHTML);
+  console.log(imageArray[questionCounter]);
   setTimeout(wait, 4000);
 }
 
 function generateLoss(){
   incorrectTally++;
-  gameHTML = "<p class='text-center timer-p'>Time Remaining: <span class='timer'>" + counter + "</span></p>" + "<p class='text-center'>Wrong! The correct answer is: "+ correctAnswers[questionCounter] + "</p>" + "<img class='center-block img-wrong' src='img/x.png'>";
+  gameHTML = "<p class='text-center timer-p'>Time Remaining: <span class='timer'>" + counter + "</span></p>" + "<p class='text-center'>Wrong! The correct answer is: "+ correctAnswers[questionCounter] + "</p>" + imageArray[questionCounter];
   $('.mainArea').html(gameHTML);
   setTimeout(wait, 4000);
 }
@@ -96,6 +97,7 @@ $(document).ready(function(){
 	event.preventDefault();  // added line to test issue on GitHub Viewer
 
 	generateHTML();
+
 
 	timerWrapper();
 

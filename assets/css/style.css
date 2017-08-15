@@ -3,10 +3,23 @@
   height: 600px;
   background-color: rgba(0, 0, 0, 0);
 }
-h1{
-  background-color:#ffff38;
+
+#heading {
+    background: linear-gradient(to right, #fce146 , #ff9914);
+  border: 7.5px solid #6759ff;
+  color: black;
   border-radius: 10px;
   padding: 20px 0 20px 0;
+  font-size: 72px;
+  font-weight: lighter;
+  letter-spacing: 1.5px;
+  font-family: 'Fredoka One', cursive;
+}
+
+.mainArea {
+  background: linear-gradient(to right, #6759ff , #ce5ee5);
+  border: 5px solid  #ff9914;
+  border-radius: 5px;
 }
 
 .main-button-container {
@@ -21,7 +34,7 @@ h1{
 }
 
 .answer:hover {
-  background: pink;
+  background: linear-gradient(to left, #fce146 , #ff9914);
 }
 
 .answer {
@@ -49,7 +62,11 @@ h1{
   margin-top: 40px;
 }
 
+img{
+  margin-bottom: 30px;
+}
+
 body {
-  background-color: black;
+  background-color: #fff3af;
   color: white;
 }
