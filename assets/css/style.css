@@ -3,6 +3,11 @@
   height: 600px;
   background-color: rgba(0, 0, 0, 0);
 }
+h1{
+  background-color:#ffff38;
+  border-radius: 10px;
+  padding: 20px 0 20px 0;
+}
 
 .main-button-container {
   margin-top: 175px;
@@ -45,6 +50,6 @@
 }
 
 body {
-  background-color: #DD0506;
+  background-color: black;
   color: white;
 }
