@@ -1,106 +1,125 @@
-//create an object variable for questions
-//create a timer function to countdown 20 seconds
-//create a timer function for 5 seconds before moving to next questions
-//
-//timerUp function to check correct or incorrect answer
-//variable for right and wrong answers
+//global variables
+var startScreen;
+var gameHTML;
+var counter = 30;
+var questionArray = ['What is the name of the diner frequented by the gang?', 'What kind of bread did the Costanza family steal back from Julie?'];
+var answerArray =[['Who Knows', 'Who Cares', 'Who Wants', 'Huh?'],['Pumpernickel', 'Rye', 'Sourdough', 'French']];
+var imageArray = [];
+var correctAnswers = ['A. Who Knows','B. Rye'];
+var questionCounter = 0;
+var selectedAnswer;
+var theClock;
+var correctTally = 0;
+var incorrectTally = 0;
+var unansweredTally = 0;
 
-var correctAnswers = 0;
-var incorrectAnswers = 0;
+//global functions
 
-var q1 = {
-    question: "What type of bread did Frank Costanza take back from George's girlfriend?",
-    answers: ['Marble Rye', 'San Francisco Sourdough', 'Deli Bagels', 'Pumpernickel'],
-    flags: [true, false, false, false],
-    solution: 'A. Marble Rye'
-  };
+function initialScreen() {
+	startScreen = "<p class='text-center main-button-container'><a class='btn btn-primary btn-lg btn-block start-button' href='#' role='button'>Start Quiz</a></p>";
+	$(".mainArea").html(startScreen);
+}
 
-var q2 = {
-    question: "What kind of seafood did Kramer prepare at the Hamptons?",
-    answers: ['Crab Legs', 'Lobster Tails', 'Grilled Tuna', 'Mahi Mahi'],
-    flags: [false, true, false, false],
-    solution: 'B. Lobster Tails'
-  };
+function generateLossDueToTimeout(){
+  unansweredTally++;
+  gameHTML = "<p class='text-center timer-p'>Time Remaining: <span class='timer'>" + counter + "</span></p>" + "<p class='text-center'>You ran out of time!  The correct answer was: " + correctAnswers[questionCounter] + "</p>" + "<img class='center-block img-wrong' src='img/x.png'>";
+  $('.mainArea').html(gameHTML);
+  setTimeout(wait, 4000);
+}
+
+function generateWin(){
+  correctTally++;
+  gameHTML = "<p class='text-center timer-p'>Time Remaining: <span class='timer'>" + counter + "</span></p>" + "<p class='text-center'>Correct! The answer is: " + correctAnswers[questionCounter] + "</p>" + imageArray[questionCounter];
+  $('.mainArea').html(gameHTML);
+  setTimeout(wait, 4000);
+}
+
+function generateLoss(){
+  incorrectTally++;
+  gameHTML = "<p class='text-center timer-p'>Time Remaining: <span class='timer'>" + counter + "</span></p>" + "<p class='text-center'>Wrong! The correct answer is: "+ correctAnswers[questionCounter] + "</p>" + "<img class='center-block img-wrong' src='img/x.png'>";
+  $('.mainArea').html(gameHTML);
+  setTimeout(wait, 4000);
+}
+
+function generateHTML(){
+  gameHTML = "<p class='text-center timer-p'>Time Remaining: <span class='timer'>30</span></p><p class='text-center'>" + questionArray[questionCounter] + "</p><p class='first-answer answer'>A. " + answerArray[questionCounter][0] + "</p><p class='answer'>B. "+answerArray[questionCounter][1]+"</p><p class='answer'>C. "+answerArray[questionCounter][2]+"</p><p class='answer'>D. "+answerArray[questionCounter][3]+"</p>";
+  $('.mainArea').html(gameHTML);
+}
+
+function wait(){
+  if (questionCounter < 7){
+    questionCounter++;
+    generateHTML();
+    counter = 30;
+    timerWrapper();
+  }
+  else{
+    finalScreen();
+  }
+}
+
+function timerWrapper(){
+  theClock = setInterval(thirtySeconds, 1000);
+
+  function thirtySeconds(){
+    if(counter === 0){
+      clearInterval(theClock);
+      generateLossDueToTimeout();
+    }
+    if (counter > 0){
+      counter--;
+    }
+    $('.timer').html(counter);
+  }
+}
+
+function finalScreen(){
+  gameHTML = "<p class='text-center timer-p'>Time Remaining: <span class='timer'>" + counter + "</span></p>" + "<p class='text-center'>All done, here's how you did!" + "</p>" + "<p class='summary-correct'>Correct Answers: " + correctTally + "</p>" + "<p>Wrong Answers: " + incorrectTally + "</p>" + "<p>Unanswered: " + unansweredTally + "</p>" + "<p class='text-center reset-button-container'><a class='btn btn-primary btn-lg btn-block reset-button' href='#' role='button'>Reset The Quiz!</a></p>";
+  $(".mainArea").html(gameHTML);
+}
+
+function resetGame(){
+  questionCounter = 0;
+  unansweredTally = 0;
+  correctTally = 0;
+  incorrectTally = 0;
+  counter = 30;
+  generateHTML();
+  timerWrapper();
+}
 
 $(document).ready(function(){
+  initialScreen();
 
-  function makeButtons(q){
-    var btnIds=['A', 'B', 'C', 'D'];
+  $("body").on("click", ".start-button", function(event){
+	event.preventDefault();  // added line to test issue on GitHub Viewer
 
-    for(var i =0; i<btnIds.length;i++){
-      var answerButton = $('<button>');
-      answerButton.text(btnIds[i]);
-      answerButton.addClass('btn btn-info');
-      answerButton.attr('data', q.flags[i]);
-      $('#answerButtons').append(answerButton);
-    }
-  }
+	generateHTML();
 
-  function displayAnswer(q){
-    var correct = "The answer was " + q.solution;
-    $('#answerButtons').empty();
-    $('#questions').empty();
-    $('#answers').empty();
-    $('#answers').text(correct);
+	timerWrapper();
 
-  }
+}); // Closes start-button click
 
-  function startTimer(){
-    var countdown = 5;
-    var intervalId;
+$("body").on("click", ".answer", function(event){
+	//answeredQuestion = true;
 
-    function run() {
-      intervalId = setInterval(decrement, 1000);
-    }
+	selectedAnswer = $(this).text();
+  console.log(selectedAnswer);
+	if(selectedAnswer === correctAnswers[questionCounter]) {
+		//alert("correct");
 
-    function decrement() {
-      countdown--;
-      $('#timer').text(countdown);
+		clearInterval(theClock);
+		generateWin();
+	}
+	else {
+		//alert("wrong answer!");
+		clearInterval(theClock);
+		generateLoss();
+	}
+}); // Close .answer click
 
-      if(countdown === 0){
-        stop();
-        displayAnswer(q1);
-      }
-    }
+$("body").on("click", ".reset-button", function(event){
 
-    function stop() {
-      clearInterval(intervalId);
-    }
-    run();
-  }
-
-  function displaySlide(q){
-    $('#questions').text(q.question);
-    $('#answers').html("<br>A. "+q.answers[0]+"<br>B. "+q.answers[1]+"<br>C. "+q.answers[2]+"<br>D. " + q.answers[3]);
-
-  }
-
-  function startGame(){
-    startTimer();
-    displaySlide(q1);
-    makeButtons(q1);
-
-    $('button').on("click", function() {
-      var answer = $(this).attr('data');
-      console.log(answer);
-
-      if(answer === true){
-        correctAnswers++;
-        console.log("Correct!");
-
-      }
-      else{
-        incorrectAnswers++;
-        console.log("Incorrect!");
-
-      }
-    })
-  }
-
-
-  $('#gameStart').on("click",function(){
-    $('button').remove();
-    startGame();
-
-  });
+	resetGame();
+});
 });
