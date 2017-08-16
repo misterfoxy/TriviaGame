@@ -3,10 +3,10 @@ var startScreen;
 var gameHTML;
 var counter = 30;
 var questionArray = ['Which family lives in Queens?', 'What kind of bread did the Costanza family steal back from Julie?','Who invaded Spain in the 8th Century?','In what famous wine country does the Maestro own a home?','What alcohol cannot be detected on your breath?','What catalog did Elaine run while her boss was away in Burma?','What professional sports team does George work for?'];
-var answerArray =[['The Costanzas', 'The Seinfelds', 'The Kramers', 'The Beneses?'],['Pumpernickel', 'Rye', 'Sourdough', 'French'],['The Turks','The Moors', 'The Jews', 'The Moops'],['Napa Valley', 'Tuscany', 'Columbia Basin', 'Sicily'],
+var answerArray =[['The Costanzas', 'The Seinfelds', 'The Kramers', 'The Beneses'],['Pumpernickel', 'Marble Rye', 'Sourdough', 'French'],['The Turks','The Moors', 'The Jews', 'The Moops'],['Napa Valley', 'Tuscany', 'Columbia Basin', 'Sicily'],
 ['Hennigans','Jameson','Johnnie Walker','Bacardi'],['L.L. Bean', 'Brooks Brothers', 'J. Peterman', 'J. Crew'],['Rangers','Yankees','Knicks','Jets']];
 var imageArray = ["<img class='center-block img-right' src='assets/images/1.gif'>","<img class='center-block img-right' src='assets/images/2.gif'>","<img class='center-block img-right' src='assets/images/3.gif'>","<img class='center-block img-right' src='assets/images/4.gif'>","<img class='center-block img-right' src='assets/images/5.gif'>","<img class='center-block img-right' src='assets/images/6.gif'>","<img class='center-block img-right' src='assets/images/7.gif'>",];
-var correctAnswers = ['A. The Costanzas','B. Rye','D. The Moops', 'B. Tuscany','A. Hennigans','C. J. Peterman','B. Yankees'];
+var correctAnswers = ['A. The Costanzas','B. Marble Rye','D. The Moops', 'B. Tuscany','A. Hennigans','C. J. Peterman','B. Yankees'];
 var questionCounter = 0;
 var selectedAnswer;
 var theClock;
